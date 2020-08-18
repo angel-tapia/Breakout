@@ -13,7 +13,7 @@ class Game:
         self.screen = pygame.display.set_mode((screenWidth, screenHeight))
         self.points = 0
         self.score = 0
-        self.ball = Ball()
+        self.ball = Ball(screenWidth/2,160)
         self.paddle = Paddle()
         self.Paddle_list = pygame.sprite.Group()
         self.Paddle_list.add(self.paddle)
@@ -22,9 +22,11 @@ class Game:
             for j in range (0,4):
                 self.brick = Brick(40 + i*70, 15 + j*35)
                 self.Brick_list.add(self.brick)
+        self.Ball_list = pygame.sprite.Group()
+        self.Ball_list.add(self.ball)
 
     def simulate(self):
-        pygame.time.delay(80)
+        pygame.time.delay(40)
         #Check if is finished 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -41,8 +43,21 @@ class Game:
 
         self.paddle.direction = parsingKey(self.key)
         self.paddle.move()
+        self.ball.move()
+        if self.ball.valid() is False:
+            self.running = False
+            return
+
+        if pygame.sprite.collide_mask(self.ball, self.paddle):
+            self.ball.flipDirectionY()
+            
+        brick_collision = pygame.sprite.spritecollide(self.ball, self.Brick_list, True)
+        if brick_collision:
+            self.ball.flipDirectionY()
+        
         self.Paddle_list.update()
         self.Brick_list.update()
+        self.Ball_list.update()
 
     def draw(self):
         #Display points obtained actually
@@ -53,6 +68,7 @@ class Game:
         #pygame.draw.rect(self.screen,(146, 168, 209),(self.paddle.x, self.paddle.y , widthPaddle, heightPaddle))
         self.Paddle_list.draw(self.screen)
         self.Brick_list.draw(self.screen)
+        self.Ball_list.draw(self.screen)
         pygame.display.update()
 
     def over(self):
