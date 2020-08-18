@@ -5,6 +5,9 @@ widthPaddle = 100
 heightPaddle = 10
 widthBrick = 50
 heightBrick = 20
+widthBall = 12
+heightBall = 12
+speedBall = 8
 speed = 25
 
 #Colors
