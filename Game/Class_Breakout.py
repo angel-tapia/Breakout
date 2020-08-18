@@ -5,8 +5,8 @@ from Constants import *
 class Ball:
 
     def __init__ (self):
-        self.x = screenLarge//2
-        self.y = screenWidth//2
+        self.x = screenWidth//2
+        self.y = screenHeight//2
         
 
     def move(self):
@@ -18,24 +18,35 @@ class Ball:
     def setDirection(self, direction):
         return False
 
-class Bricks:
+class Brick(pygame.sprite.Sprite):
 
-    
-class Paddle:
+    def __init__ (self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((widthBrick,heightBrick))
+        self.image.fill((200, 100, 200))
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+
+class Paddle(pygame.sprite.Sprite):
 
     def __init__ (self):
-        self.x = screenLarge//2
-        self.y = screenWidth-100
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.Surface((widthPaddle, heightPaddle))
+        self.image.fill((146, 168, 209))
+        self.rect = self.image.get_rect()
+        self.rect.center = (screenWidth//2, screenHeight-100)
 
     def move(self):
         if self.direction is "Left":
-            self.x -= speed
+            self.rect.x -= speed
         if self.direction is "Right":
-            self.x += speed
+            self.rect.x += speed
         self.isValid()
         
     def isValid(self):
-        if self.x + largePaddle > screenLarge:
-            self.x = screenLarge-largePaddle
-        if self.x < 0:
-            self.x = 0
+        if self.rect.x + widthPaddle > screenWidth:
+            self.rect.x = screenWidth-widthPaddle
+        if self.rect.x < 0:
+            self.rect.x = 0
