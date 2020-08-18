@@ -1,8 +1,10 @@
 #Constants
-screenLarge = 750
-screenWidth = 450
-largePaddle = 100
-widthPaddle = 10
+screenWidth = 750
+screenHeight = 450
+widthPaddle = 100
+heightPaddle = 10
+widthBrick = 50
+heightBrick = 20
 speed = 25
 
 #Colors
