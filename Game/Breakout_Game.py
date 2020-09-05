@@ -24,6 +24,7 @@ class Game:
                 self.Brick_list.add(self.brick)
         self.Ball_list = pygame.sprite.Group()
         self.Ball_list.add(self.ball)
+        self.points = 0
 
     def simulate(self):
         pygame.time.delay(40)
@@ -53,6 +54,8 @@ class Game:
             
         brick_collision = pygame.sprite.spritecollide(self.ball, self.Brick_list, True)
         if brick_collision:
+            self.points = self.points + 3
+            self.ball.randomSpeed = random.randint(-7,7)
             self.ball.flipDirectionY()
         
         self.Paddle_list.update()
@@ -76,7 +79,7 @@ class Game:
             if event.type == pygame.QUIT:
                 self.end = False
                 return
-        font = pygame.font.Font('freesansbold.ttf', 32)
+        font = pygame.font.SysFont('freesansbold.ttf', 32)
         text = font.render('Game over', True, (255, 0, 0), (0, 0, 0))
         textObj = text.get_rect()
         textObj.center = (screenWidth// 2, screenHeight // 2)

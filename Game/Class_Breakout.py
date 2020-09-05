@@ -15,6 +15,7 @@ class Ball(pygame.sprite.Sprite):
         self.rect.y = y
         self.directionX = -1
         self.directionY = -1
+        self.randomSpeed = 0
 
     def flipDirectionX (self):
         self.directionX *= -1
@@ -24,7 +25,7 @@ class Ball(pygame.sprite.Sprite):
     
     def move(self):
         self.rect.x += speedBall * self.directionX
-        self.rect.y += speedBall * self.directionY
+        self.rect.y += (speedBall + self.randomSpeed) * self.directionY
 
     def valid(self):
         if self.rect.x <= 0 or self.rect.x >= screenWidth-widthBall:
